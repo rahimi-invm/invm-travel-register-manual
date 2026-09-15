@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Register User Manual</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%98%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F4F1;
+    --bg-band: #FFFFFF;
+    --surface: #FFFFFF;
+    --text: #16202F;
+    --text-muted: #5C6B7A;
+    --border: rgba(22,32,47,0.14);
+    --border-soft: rgba(22,32,47,0.08);
+    --accent: #B9832A;
+    --accent-soft: rgba(185,131,42,0.13);
+
+    --added: #1F7A4D;      --added-soft: rgba(31,122,77,0.12);
+    --improved: #5B4B95;   --improved-soft: rgba(91,75,149,0.12);
+    --fixed: #2E6E96;      --fixed-soft: rgba(46,110,150,0.12);
+    --removed: #A23F2E;    --removed-soft: rgba(162,63,46,0.12);
+
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-body: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1420;
+      --bg-band: #101A29;
+      --surface: #101A29;
+      --text: #E7ECF2;
+      --text-muted: #93A5B8;
+      --border: rgba(231,236,242,0.14);
+      --border-soft: rgba(231,236,242,0.08);
+      --accent: #D9A441;
+      --accent-soft: rgba(217,164,65,0.16);
+
+      --added: #45B37D;    --added-soft: rgba(69,179,125,0.16);
+      --improved: #9C8FD6; --improved-soft: rgba(156,143,214,0.16);
+      --fixed: #6FB0DD;    --fixed-soft: rgba(111,176,221,0.16);
+      --removed: #E08469;  --removed-soft: rgba(224,132,105,0.16);
+
+      color-scheme: dark;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Header ---------- */
+  .header-band {
+    background: var(--bg-band);
+    border-bottom: 1px solid var(--border-soft);
+    padding: 44px 24px 0;
+  }
+  .header-inner { max-width: 1040px; margin: 0 auto; padding-bottom: 24px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 4.6vw, 2.7rem);
+    line-height: 1.08;
+    margin: 10px 0 6px;
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .lede { max-width: 62ch; color: var(--text-muted); font-size: 1.02rem; margin: 0 0 24px; }
+  .perforation { height: 1px; border-top: 1px dashed var(--border); margin: 0 -24px; }
+
+  .roles-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-soft);
+    margin: 24px 0 0;
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .role-cell { background: var(--bg-band); padding: 14px 16px; }
+  .role-cell .role-name {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .role-cell .role-desc { font-size: 0.86rem; color: var(--text-muted); margin-top: 4px; }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 36px 24px 100px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.86rem;
+  }
+  nav.toc a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  nav.toc a .n {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+  nav.toc a:hover { color: var(--text); background: var(--border-soft); }
+  nav.toc a.active { color: var(--text); border-left-color: var(--accent); background: var(--accent-soft); font-weight: 500; }
+  nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  main { min-width: 0; }
+
+  section.doc-section { padding-top: 8px; margin-bottom: 52px; scroll-margin-top: 24px; }
+  section.doc-section:first-of-type { margin-top: 0; }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.55rem;
+    margin: 4px 0 14px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.02rem;
+    margin: 26px 0 8px;
+  }
+  p { max-width: 68ch; margin: 0 0 12px; }
+  .subtle { color: var(--text-muted); }
+
+  ol.steps { max-width: 68ch; margin: 0 0 16px; padding-left: 0; list-style: none; counter-reset: step; }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 10px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  ul.plain { max-width: 68ch; margin: 0 0 16px; padding-left: 20px; }
+  ul.plain li { margin-bottom: 6px; }
+
+  .callout {
+    max-width: 68ch;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.92rem;
+    margin: 4px 0 18px;
+  }
+  .callout strong { color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  table.narrow { max-width: 68ch; }
+  th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  th { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; }
+  td code, p code, li code { font-family: var(--font-mono); font-size: 0.85em; background: var(--border-soft); padding: 1px 5px; border-radius: 3px; }
+
+  .req-yes { color: var(--removed); font-weight: 600; font-size: 0.85rem; }
+  .req-no { color: var(--added); font-weight: 600; font-size: 0.85rem; }
+
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot-drafting { background: var(--text-muted); }
+  .dot-upcoming { background: var(--fixed); }
+  .dot-ongoing { background: var(--accent); }
+  .dot-completed { background: var(--added); }
+  .dot-cancelled { background: var(--removed); }
+  .dot-archived { background: var(--text-muted); opacity: 0.6; }
+
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-soft);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted);
+    max-width: 68ch;
+  }
+
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; gap: 20px; }
+    nav.toc {
+      position: sticky; top: 0; z-index: 5;
+      flex-direction: row; overflow-x: auto; white-space: nowrap;
+      background: var(--bg); padding: 10px 0; margin: 0 -24px 8px; padding-left: 24px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    nav.toc a { border-left: none; border-bottom: 2px solid transparent; flex: 0 0 auto; }
+    nav.toc a.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+    .roles-strip { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-band">
+  <div class="header-inner">
+    <div class="eyebrow">Coordinators · Approvers · Management</div>
+    <h1>User <em>Manual</em></h1>
+    <p class="lede">A practical guide to the <strong style="color:var(--text)">INVM HSE Travel Register</strong> — how to create, review, approve, and track business travel across the Coordinator, Approval, and Management portals.</p>
+    <div class="perforation"></div>
+    <div class="roles-strip">
+      <div class="role-cell"><div class="role-name">Coordinator</div><div class="role-desc">Create trips, edit details, manage travelers, submit for approval.</div></div>
+      <div class="role-cell"><div class="role-name">Approver</div><div class="role-desc">Review and decide on the requests assigned to you.</div></div>
+      <div class="role-cell"><div class="role-name">Management</div><div class="role-desc">Read-only oversight — dashboards, breakdowns, resource availability.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="toc" id="toc">
+    <a href="#overview"><span class="n">01</span>Overview</a>
+    <a href="#signing-in"><span class="n">02</span>Signing In</a>
+    <a href="#coordinator"><span class="n">03</span>Coordinator Portal</a>
+    <a href="#approval"><span class="n">04</span>Approval Portal</a>
+    <a href="#management"><span class="n">05</span>Management Portal</a>
+    <a href="#status"><span class="n">06</span>Status Reference</a>
+    <a href="#faq"><span class="n">07</span>FAQ</a>
+  </nav>
+
+  <main>
+
+    <section class="doc-section" id="overview">
+      <div class="section-num">01</div>
+      <h2>Overview</h2>
+      <p>A trip starts either as a Google Form submission or a <strong>New Trip</strong> in the Coordinator Portal — both produce an identical record: a unique Travel ID, a participant list, a route, and a Google Drive folder for supporting documents. From there:</p>
+      <ol class="steps">
+        <li>The coordinator reviews and refines the trip's details.</li>
+        <li>Supporting documents are uploaded to the trip's Drive folder.</li>
+        <li>The coordinator submits the trip for approval.</li>
+        <li>The assigned approver reviews it and approves or rejects.</li>
+        <li>The coordinator — and anyone management-flagged — is emailed the outcome automatically.</li>
+      </ol>
+
+      <h3>Quick lookup</h3>
+      <div class="table-wrap">
+        <table class="narrow">
+          <thead><tr><th>I want to&hellip;</th><th>Go to</th></tr></thead>
+          <tbody>
+            <tr><td>Create a new trip</td><td><a href="#coordinator">§03 Coordinator Portal</a></td></tr>
+            <tr><td>Add or remove a traveler</td><td><a href="#coordinator">§03.2 Reviewing &amp; Editing</a></td></tr>
+            <tr><td>Upload a document</td><td><a href="#coordinator">§03.3 Supporting Documents</a></td></tr>
+            <tr><td>Cancel or withdraw a trip</td><td><a href="#coordinator">§03.5 Trip Actions</a></td></tr>
+            <tr><td>Approve or reject a request</td><td><a href="#approval">§04 Approval Portal</a></td></tr>
+            <tr><td>See who's traveling this month</td><td><a href="#management">§05 Management Portal</a></td></tr>
+            <tr><td>Understand a status label</td><td><a href="#status">§06 Status Reference</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-section" id="signing-in">
+      <div class="section-num">02</div>
+      <h2>Signing In</h2>
+      <p>All three portals use your existing INVM Google account — there's no separate password to remember. Whichever portal link you open, what you see is scoped to your signed-in email: coordinators see their own trips, approvers see only requests assigned to them, and management-flagged users additionally get a <strong>Management Dashboard</strong> link.</p>
+    </section>
+
+    <section class="doc-section" id="coordinator">
+      <div class="section-num">03</div>
+      <h2>Coordinator Portal</h2>
+      <p>Your home base for creating and managing trips. The sidebar lists every trip you've submitted or created, with search and a status filter.</p>
+
+      <h3>03.1 &nbsp;Creating a New Trip</h3>
+      <ol class="steps">
+        <li>Click <strong>+ Add New Trip</strong>.</li>
+        <li>Fill in Trip Name and dates. Origin is fixed to your home base.</li>
+        <li>Pick Trip Activities from the chip picker — Business Category is derived automatically from what you select (use <strong>+ Other</strong> if nothing fits).</li>
+        <li>Choose your destination — a curated region → city dropdown for domestic trips, or a country dropdown for international ones.</li>
+        <li>Save. The trip lands in <code>Drafting</code>, and the review panel opens automatically.</li>
+      </ol>
+      <p class="subtle">Route detail (stops, transport) and traveler assignment happen after creation, in the review panel below — not in the creation form itself.</p>
+
+      <h3>03.2 &nbsp;Reviewing &amp; Editing a Trip</h3>
+      <ul class="plain">
+        <li><strong>Header bar</strong> — Trip Name, dates, and route each have a pencil icon for a quick inline edit, without leaving the page.</li>
+        <li><strong>Trip Summary</strong> — the itinerary as a vertical timeline: each stop, transport leg, and stay in order, connected by a line. Click a pencil to edit a leg or stay in place; use <strong>+ Add another stay</strong> for a split-hotel destination.</li>
+        <li><strong>Objective &amp; Context</strong> — Trip Activities, Business Category, Reference/Subject, and Remarks, shown as reference. Only Trip Name is editable today (via the header-bar pencil); the rest is display-only for now.</li>
+        <li><strong>Travelers &amp; Roles</strong> — click <strong>Manage Travelers</strong>, then click a person's chip to add or remove them. Each traveler's role dropdown can reassign who's shown as Coordinator — this only changes the display label, not who has edit access to the trip.</li>
+      </ul>
+
+      <h3>03.3 &nbsp;Supporting Documents</h3>
+      <p>Every trip gets its own Drive folder, linked from the review panel. Upload invitation letters, itineraries, or approvals there directly in Drive — there's no separate uploader inside the portal. At least one document is required before you can submit for approval.</p>
+
+      <h3>03.4 &nbsp;Submitting for Approval</h3>
+      <p>Once the trip is ready and has at least one document, click <strong>Submit for Approval</strong>. This sends the request to the assigned approver, emails them, and locks the fields listed below until the approver decides (or you withdraw).</p>
+
+      <h3>03.5 &nbsp;Trip Actions &amp; Reasons</h3>
+      <div class="table-wrap">
+        <table class="narrow">
+          <thead><tr><th>Action</th><th>Reason required?</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Update Trip Dates</td><td class="req-no">No</td><td>Routine correction</td></tr>
+            <tr><td>Update Route / Transport</td><td class="req-no">No</td><td>Routine correction</td></tr>
+            <tr><td>Add / Remove / Replace Participant</td><td class="req-no">No</td><td>Via Travelers &amp; Roles</td></tr>
+            <tr><td>Participant Travel Detail</td><td class="req-no">No</td><td>Different return date/transport for one person</td></tr>
+            <tr><td>Withdraw Submission</td><td class="req-yes">Yes</td><td>Pulls the request back for edits</td></tr>
+            <tr><td>Request Change After Approval</td><td class="req-yes">Yes</td><td>Re-opens an already-approved trip</td></tr>
+            <tr><td>Cancel Trip</td><td class="req-yes">Yes</td><td>Keeps a full record — this trip's history stays intact</td></tr>
+            <tr><td>Discard Trip</td><td class="req-no">No — just a confirmation</td><td><strong>Permanently deletes</strong> the trip. Only available before first submission.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><strong>Once a trip is Cancelled, Completed, or Archived</strong>, none of the actions above apply any longer — those statuses are terminal. See §06 for what each status means.</div>
+    </section>
+
+    <section class="doc-section" id="approval">
+      <div class="section-num">04</div>
+      <h2>Approval Portal</h2>
+      <p>You'll only see an <strong>Approvals</strong> link in your own Coordinator sidebar if you're listed as someone's designated approver — the portal itself only ever shows requests assigned to your email.</p>
+
+      <h3>04.1 &nbsp;Reviewing a Request</h3>
+      <p>Open a request from the sidebar list to see a read-only view of the trip — the same layout coordinators see, minus any edit controls. Filter the list by <code>Pending</code>, <code>Approved</code>, or <code>Rejected</code>, or search by trip name or coordinator.</p>
+
+      <h3>04.2 &nbsp;Approve or Reject</h3>
+      <p>Use the <strong>Approve</strong> or <strong>Reject</strong> button on the request. Rejecting requires a short reason so the coordinator knows what to fix; approving doesn't. Either way, the coordinator and every management-flagged user get an automatic email with the decision, your remarks, and next steps.</p>
+
+      <h3>04.3 &nbsp;Revision History</h3>
+      <p>If a trip is resubmitted after a rejection or a requested change, each version is tracked as its own revision. Open the request to see the full history — every past submission's status, dates, and remarks — not just the current one.</p>
+    </section>
+
+    <section class="doc-section" id="management">
+      <div class="section-num">05</div>
+      <h2>Management Portal</h2>
+      <p>A read-only oversight view, visible only to management-flagged users via the <strong>Management Dashboard</strong> link. It's independent of whether you're also a coordinator or approver — nothing about your own trips changes.</p>
+
+      <h3>05.1 &nbsp;Dashboard</h3>
+      <p>Pick a period (month, custom range, or year) to see stat cards — total trips, active now, pending approvals, average approval turnaround — plus breakdowns by status, approval outcome, department, trip type, and category. Click any breakdown slice to drill into the underlying trip list.</p>
+
+      <h3>05.2 &nbsp;Resource Availability</h3>
+      <p>Switch to the Resource Availability tab for a forward-looking calendar of who's traveling and when — one row per employee, one bar per trip, so overlapping travel is visible at a glance. Click a bar to drill into that specific trip.</p>
+    </section>
+
+    <section class="doc-section" id="status">
+      <div class="section-num">06</div>
+      <h2>Status Reference</h2>
+      <p>Trip Status and Approval Status are two separate fields that change independently — a trip can be <code>Upcoming</code> and <code>Rejected</code> at the same time (submitted, then rejected, not yet re-edited).</p>
+
+      <h3>06.1 &nbsp;Trip Status</h3>
+      <div class="table-wrap">
+        <table class="narrow">
+          <tbody>
+            <tr><td><span class="status-dot dot-drafting"></span><code>Drafting</code></td><td>Editable, not yet submitted for approval.</td></tr>
+            <tr><td><span class="status-dot dot-upcoming"></span><code>Upcoming</code></td><td>Submitted and not yet started, regardless of decision.</td></tr>
+            <tr><td><span class="status-dot dot-ongoing"></span><code>Ongoing</code></td><td>Trip currently in progress.</td></tr>
+            <tr><td><span class="status-dot dot-completed"></span><code>Completed</code></td><td>Finished — stays open until the last traveller's return date, including any override.</td></tr>
+            <tr><td><span class="status-dot dot-cancelled"></span><code>Cancelled</code></td><td>Trip cancelled.</td></tr>
+            <tr><td><span class="status-dot dot-archived"></span><code>Archived</code></td><td>Aged out of the active list, automatically, 30 days after Completed. The record itself is unchanged — it just drops off the default view.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>06.2 &nbsp;Approval Status</h3>
+      <div class="table-wrap">
+        <table class="narrow">
+          <tbody>
+            <tr><td><code>Unsubmitted</code></td><td>Not yet submitted for approval.</td></tr>
+            <tr><td><code>Reviewing</code></td><td>Awaiting a decision — initial submission or a resubmission.</td></tr>
+            <tr><td><code>Approved</code></td><td>Approved.</td></tr>
+            <tr><td><code>Rejected</code></td><td>Rejected — coordinator can revise and resubmit.</td></tr>
+            <tr><td><code>Withdrawn</code></td><td>Submission withdrawn by the coordinator.</td></tr>
+            <tr><td><code>Reopened</code></td><td>An approved trip needs changes before it can proceed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-section" id="faq">
+      <div class="section-num">07</div>
+      <h2>FAQ</h2>
+
+      <h3>Why don't I see the Approvals link?</h3>
+      <p>It only appears if you're listed as someone's designated approver. If you believe you should be one, check with whoever maintains the employee list.</p>
+
+      <h3>What's the difference between Discard and Cancel?</h3>
+      <p><strong>Discard</strong> permanently deletes the trip and its records — only available before it's ever been submitted, no reason needed beyond a confirmation. <strong>Cancel</strong> keeps the full record for audit and requires a reason — it's available any time before the trip reaches a terminal status.</p>
+
+      <h3>Why can't I edit some fields on my trip?</h3>
+      <p>Trip Name can be edited from the header bar. The rest of Objective &amp; Context (Business Category, Reference/Subject, Additional Notes) doesn't have an edit control in the portal yet — if you need one of those changed, flag it directly for now.</p>
+
+      <h3>Why did my old trip disappear from the list?</h3>
+      <p>Completed trips move to <code>Archived</code> automatically 30 days after completion and drop off the default view. Nothing is deleted — the record is unchanged.</p>
+
+      <h3>How do I upload a document?</h3>
+      <p>Open the trip's Drive folder link from the review panel and upload it there directly — the portal doesn't have its own uploader. At least one document is required before you can submit for approval.</p>
+
+      <h3>I'm a management-flagged coordinator — do I lose my own trip list?</h3>
+      <p>No. Being management-flagged only adds the Management Dashboard link; your own "My Trips" view is completely unaffected.</p>
+    </section>
+
+    <div class="footer">
+      <span>Source: INVM HSE Travel Register project repository.</span>
+      <span>Last updated 15 Sep 2026</span>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const links = Array.from(document.querySelectorAll('nav.toc a'));
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const idx = sections.indexOf(entry.target);
+      if (idx === -1) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        links[idx].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => { if (s) observer.observe(s); });
+</script>
+</body>
+</html>
