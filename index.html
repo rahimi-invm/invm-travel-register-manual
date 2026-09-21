@@ -197,6 +197,12 @@
   }
   .lede { max-width: 62ch; color: var(--muted); font-size: var(--text-lg); margin: 0 0 var(--space-6); }
 
+  .site-nav { display: flex; gap: var(--space-4); margin-bottom: var(--space-6); font-size: var(--text-sm); font-weight: 600; }
+  .site-nav a { color: var(--muted); text-decoration: none; padding-bottom: var(--space-1); border-bottom: 2px solid transparent; }
+  .site-nav a:hover { color: var(--text); }
+  .site-nav a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent-text); }
+  .site-nav a:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
   .roles-strip {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -377,13 +383,17 @@
 
 <div class="header-band">
   <div class="header-inner">
+    <nav class="site-nav" aria-label="Site">
+      <a href="./" aria-current="page">User Manual</a>
+      <a href="changelog.html">Changelog</a>
+    </nav>
     <div class="eyebrow">Coordinators · Approvers · Management</div>
     <h1>User Manual</h1>
-    <p class="lede">A practical guide to the <strong style="color:var(--text)">INVM HSE Travel Register</strong> — how to create, review, approve, and track business travel across the Coordinator, Approval, and Management portals.</p>
+    <p class="lede">How to create, review, approve, and track business travel in the <strong style="color:var(--text)">INVM HSE Travel Register</strong>.</p>
     <div class="roles-strip">
-      <div class="role-cell"><div class="role-name">Coordinator</div><div class="role-desc">Create trips, edit details, manage travelers, submit for approval.</div></div>
-      <div class="role-cell"><div class="role-name">Approver</div><div class="role-desc">Review and decide on the requests assigned to you.</div></div>
-      <div class="role-cell"><div class="role-name">Management</div><div class="role-desc">Read-only oversight — dashboards, breakdowns, resource availability.</div></div>
+      <div class="role-cell"><div class="role-name">Coordinator</div><div class="role-desc">Create and edit trips, manage travelers, and submit for approval.</div></div>
+      <div class="role-cell"><div class="role-name">Approver</div><div class="role-desc">Approve or reject the requests assigned to you.</div></div>
+      <div class="role-cell"><div class="role-name">Management</div><div class="role-desc">Read-only view of all travel: dashboard, breakdowns, and who's traveling when.</div></div>
     </div>
   </div>
 </div>
@@ -391,12 +401,11 @@
 <div class="layout">
   <nav class="toc" id="toc">
     <a href="#overview"><span class="n">01</span>Overview</a>
-    <a href="#signing-in"><span class="n">02</span>Signing In</a>
-    <a href="#coordinator"><span class="n">03</span>Coordinator Portal</a>
-    <a href="#approval"><span class="n">04</span>Approval Portal</a>
-    <a href="#management"><span class="n">05</span>Management Portal</a>
-    <a href="#status"><span class="n">06</span>Status Reference</a>
-    <a href="#faq"><span class="n">07</span>FAQ</a>
+    <a href="#coordinator"><span class="n">02</span>Coordinator Portal</a>
+    <a href="#approval"><span class="n">03</span>Approval Portal</a>
+    <a href="#management"><span class="n">04</span>Management Portal</a>
+    <a href="#status"><span class="n">05</span>Status Reference</a>
+    <a href="#faq"><span class="n">06</span>FAQ</a>
   </nav>
 
   <main>
@@ -404,13 +413,14 @@
     <section class="doc-section" id="overview">
       <div class="section-num">01</div>
       <h2>Overview</h2>
-      <p>A trip starts either as a Google Form submission or a <strong>New Trip</strong> in the Coordinator Portal — both produce an identical record: a unique Travel ID, a participant list, a route, and a Google Drive folder for supporting documents. From there:</p>
+      <p>Use the Travel Register to declare and get approval for business travel <strong>outside Klang Valley</strong>. Sign in with your INVM Google account &mdash; there's no separate password. What you see depends on your role.</p>
+      <p>Every trip follows the same path:</p>
       <ol class="steps">
-        <li>The coordinator reviews and refines the trip's details.</li>
+        <li>A coordinator (the person organizing the trip) creates it in the Coordinator Portal.</li>
         <li>Supporting documents are uploaded to the trip's Drive folder.</li>
         <li>The coordinator submits the trip for approval.</li>
-        <li>The assigned approver reviews it and approves or rejects.</li>
-        <li>The coordinator — and anyone management-flagged — is emailed the outcome automatically.</li>
+        <li>The assigned approver approves or rejects it.</li>
+        <li>The coordinator and Management users are emailed the decision.</li>
       </ol>
 
       <h3>Quick lookup</h3>
@@ -418,159 +428,152 @@
         <table class="narrow">
           <thead><tr><th>I want to&hellip;</th><th>Go to</th></tr></thead>
           <tbody>
-            <tr><td>Create a new trip</td><td><a href="#coordinator">§03 Coordinator Portal</a></td></tr>
-            <tr><td>Add or remove a traveler</td><td><a href="#coordinator">§03.2 Reviewing &amp; Editing</a></td></tr>
-            <tr><td>Upload a document</td><td><a href="#coordinator">§03.3 Supporting Documents</a></td></tr>
-            <tr><td>Cancel or withdraw a trip</td><td><a href="#coordinator">§03.5 Trip Actions</a></td></tr>
-            <tr><td>Approve or reject a request</td><td><a href="#approval">§04 Approval Portal</a></td></tr>
-            <tr><td>See who's traveling this month</td><td><a href="#management">§05 Management Portal</a></td></tr>
-            <tr><td>Understand a status label</td><td><a href="#status">§06 Status Reference</a></td></tr>
+            <tr><td>Create a new trip</td><td><a href="#coordinator">§02.1 Create a trip</a></td></tr>
+            <tr><td>Add or remove a traveler</td><td><a href="#coordinator">§02.2 Review and edit</a></td></tr>
+            <tr><td>Upload a document</td><td><a href="#coordinator">§02.3 Supporting documents</a></td></tr>
+            <tr><td>Withdraw, cancel, or discard a trip</td><td><a href="#coordinator">§02.5 Actions and reasons</a></td></tr>
+            <tr><td>Approve or reject a request</td><td><a href="#approval">§03 Approval Portal</a></td></tr>
+            <tr><td>See who's traveling and when</td><td><a href="#management">§04.2 Resource Availability</a></td></tr>
+            <tr><td>Understand a status</td><td><a href="#status">§05 Status Reference</a></td></tr>
           </tbody>
         </table>
       </div>
-    </section>
-
-    <section class="doc-section" id="signing-in">
-      <div class="section-num">02</div>
-      <h2>Signing In</h2>
-      <p>All three portals use your existing INVM Google account — there's no separate password to remember. Whichever portal link you open, what you see is scoped to your signed-in email: coordinators see their own trips, approvers see only requests assigned to them, and management-flagged users additionally get a <strong>Management Dashboard</strong> link.</p>
     </section>
 
     <section class="doc-section" id="coordinator">
-      <div class="section-num">03</div>
+      <div class="section-num">02</div>
       <h2>Coordinator Portal</h2>
-      <p>Your home base for creating and managing trips. The sidebar lists every trip you've submitted or created, with search and a status filter.</p>
+      <p>Create and manage your trips here. The sidebar lists your trips, with search and a status filter.</p>
 
-      <h3>03.1 &nbsp;Creating a New Trip</h3>
+      <h3>02.1 &nbsp;Create a trip</h3>
       <ol class="steps">
         <li>Click <strong>+ Add New Trip</strong>.</li>
-        <li>Fill in Trip Name and dates. Origin is fixed to your home base.</li>
-        <li>Pick Trip Activities from the chip picker — Business Category is derived automatically from what you select (use <strong>+ Other</strong> if nothing fits).</li>
-        <li>Choose your destination — a curated region → city dropdown for domestic trips, or a country dropdown for international ones.</li>
-        <li>Save. The trip lands in <code>Drafting</code>, and the review panel opens automatically.</li>
+        <li>Enter the Trip Name and the start and end dates.</li>
+        <li>Choose <strong>Domestic</strong> or <strong>International</strong>, then a destination: a region and city, or a country. The starting point is preset.</li>
+        <li>Pick the Trip Activities that apply (use <strong>+ Other</strong> if none fit). Business Category is filled in for you. A Reference / Subject and notes are optional.</li>
+        <li>Save. The trip is created as <code>Drafting</code> and opens in the review panel.</li>
       </ol>
-      <p class="subtle">Route detail (stops, transport) and traveler assignment happen after creation, in the review panel below — not in the creation form itself.</p>
+      <p class="subtle">Add stops, transport, stays, and travelers afterwards, in the review panel.</p>
 
-      <h3>03.2 &nbsp;Reviewing &amp; Editing a Trip</h3>
+      <h3>02.2 &nbsp;Review and edit a trip</h3>
+      <p>Select a trip in the sidebar. The review panel has four parts:</p>
       <ul class="plain">
-        <li><strong>Header bar</strong> — Trip Name, dates, and route each have a pencil icon for a quick inline edit, without leaving the page.</li>
-        <li><strong>Trip Summary</strong> — the itinerary as a vertical timeline: each stop, transport leg, and stay in order, connected by a line. Click a pencil to edit a leg or stay in place; use <strong>+ Add another stay</strong> for a split-hotel destination.</li>
-        <li><strong>Objective &amp; Context</strong> — Trip Activities, Business Category, Reference/Subject, and Remarks, shown as reference. Only Trip Name is editable today (via the header-bar pencil); the rest is display-only for now.</li>
-        <li><strong>Travelers &amp; Roles</strong> — click <strong>Manage Travelers</strong>, then click a person's chip to add or remove them. Each traveler's role dropdown can reassign who's shown as Coordinator — this only changes the display label, not who has edit access to the trip.</li>
+        <li><strong>Header bar</strong> &mdash; click the pencil next to the Trip Name, dates, or route to edit it in place.</li>
+        <li><strong>Trip Summary</strong> &mdash; your itinerary as a timeline of stops, transport legs, and stays. Click a pencil to edit a leg or stay, including flight numbers, times, and hotel details. Use <strong>+ Add another stay</strong> when you change hotels at one destination.</li>
+        <li><strong>Objective &amp; Context</strong> &mdash; activities, business category, reference/subject, and notes. These are view-only for now; only the Trip Name can be edited (from the header bar).</li>
+        <li><strong>Travelers &amp; Roles</strong> &mdash; click <strong>Manage Travelers</strong>, search and click people to add or remove them, then <strong>Save</strong>. The role dropdown changes who is labelled Coordinator, not who can edit the trip.</li>
       </ul>
 
-      <h3>03.3 &nbsp;Supporting Documents</h3>
-      <p>Every trip gets its own Drive folder, linked from the review panel. Upload invitation letters, itineraries, or approvals there directly in Drive — there's no separate uploader inside the portal. At least one document is required before you can submit for approval.</p>
+      <h3>02.3 &nbsp;Supporting documents</h3>
+      <p>Each trip has its own Google Drive folder, linked from the review panel. Upload documents there, such as invitation letters or itineraries. At least one document is required before you can submit.</p>
 
-      <h3>03.4 &nbsp;Submitting for Approval</h3>
-      <p>Once the trip is ready and has at least one document, click <strong>Submit for Approval</strong>. This sends the request to the assigned approver, emails them, and locks the fields listed below until the approver decides (or you withdraw).</p>
+      <h3>02.4 &nbsp;Submit for approval</h3>
+      <p>Click <strong>Submit for Approval</strong>. The assigned approver is emailed, and most editing is locked until they decide or you withdraw. It helps to let your approver know directly.</p>
 
-      <h3>03.5 &nbsp;Trip Actions &amp; Reasons</h3>
+      <h3>02.5 &nbsp;Actions and reasons</h3>
       <div class="table-wrap">
-        <table class="narrow">
-          <thead><tr><th>Action</th><th>Reason required?</th><th>Notes</th></tr></thead>
+        <table>
+          <thead><tr><th>Action</th><th>When</th><th>Reason</th></tr></thead>
           <tbody>
-            <tr><td>Update Trip Dates</td><td class="req-no">No</td><td>Routine correction</td></tr>
-            <tr><td>Update Route / Transport</td><td class="req-no">No</td><td>Routine correction</td></tr>
-            <tr><td>Add / Remove / Replace Participant</td><td class="req-no">No</td><td>Via Travelers &amp; Roles</td></tr>
-            <tr><td>Participant Travel Detail</td><td class="req-no">No</td><td>Different return date/transport for one person</td></tr>
-            <tr><td>Withdraw Submission</td><td class="req-yes">Yes</td><td>Pulls the request back for edits</td></tr>
-            <tr><td>Request Change After Approval</td><td class="req-yes">Yes</td><td>Re-opens an already-approved trip</td></tr>
-            <tr><td>Cancel Trip</td><td class="req-yes">Yes</td><td>Keeps a full record — this trip's history stays intact</td></tr>
-            <tr><td>Discard Trip</td><td class="req-no">No — just a confirmation</td><td><strong>Permanently deletes</strong> the trip. Only available before first submission.</td></tr>
+            <tr><td>Edit dates, route, transport, or travelers</td><td>Before you submit, and after a withdrawal, rejection, or change request</td><td class="req-no">Optional</td></tr>
+            <tr><td>Withdraw Submission</td><td>While waiting for a decision</td><td class="req-yes">Required</td></tr>
+            <tr><td>Request Change</td><td>After approval. Reopens the trip for edits and needs re-approval.</td><td class="req-yes">Required</td></tr>
+            <tr><td>Cancel Trip</td><td>Any time after first submission, until the trip is finished. Keeps the record.</td><td class="req-yes">Required</td></tr>
+            <tr><td>Discard Trip</td><td>Before first submission only. <strong>Permanently deletes</strong> the trip.</td><td class="req-no">None &mdash; just confirm</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="callout"><strong>Once a trip is Cancelled, Completed, or Archived</strong>, none of the actions above apply any longer — those statuses are terminal. See §06 for what each status means.</div>
+      <div class="callout"><strong>Once a trip is Cancelled, Completed, or Archived</strong>, none of these actions are available.</div>
     </section>
 
     <section class="doc-section" id="approval">
-      <div class="section-num">04</div>
+      <div class="section-num">03</div>
       <h2>Approval Portal</h2>
-      <p>You'll only see an <strong>Approvals</strong> link in your own Coordinator sidebar if you're listed as someone's designated approver — the portal itself only ever shows requests assigned to your email.</p>
+      <p>The <strong>Approvals</strong> link appears in your sidebar only if you're a designated approver, and you only see requests assigned to you.</p>
 
-      <h3>04.1 &nbsp;Reviewing a Request</h3>
-      <p>Open a request from the sidebar list to see a read-only view of the trip — the same layout coordinators see, minus any edit controls. Filter the list by <code>Pending</code>, <code>Approved</code>, or <code>Rejected</code>, or search by trip name or coordinator.</p>
+      <h3>03.1 &nbsp;Review a request</h3>
+      <p>Select a request in the sidebar to review the trip (read-only). Filter by <code>Pending</code>, <code>Approved</code>, or <code>Rejected</code>, or search by trip name or coordinator.</p>
 
-      <h3>04.2 &nbsp;Approve or Reject</h3>
-      <p>Use the <strong>Approve</strong> or <strong>Reject</strong> button on the request. Rejecting requires a short reason so the coordinator knows what to fix; approving doesn't. Either way, the coordinator and every management-flagged user get an automatic email with the decision, your remarks, and next steps.</p>
+      <h3>03.2 &nbsp;Approve or reject</h3>
+      <p>Click <strong>Approve</strong> or <strong>Reject</strong>. Remarks are optional when approving; rejecting requires a reason so the coordinator knows what to fix. The coordinator and all Management users are emailed your decision.</p>
 
-      <h3>04.3 &nbsp;Revision History</h3>
-      <p>If a trip is resubmitted after a rejection or a requested change, each version is tracked as its own revision. Open the request to see the full history — every past submission's status, dates, and remarks — not just the current one.</p>
+      <h3>03.3 &nbsp;Revision history</h3>
+      <p>If a trip is resubmitted after a rejection or change request, each submission is kept as a numbered revision. Open a request to see the status, dates, and remarks of every revision.</p>
     </section>
 
     <section class="doc-section" id="management">
-      <div class="section-num">05</div>
+      <div class="section-num">04</div>
       <h2>Management Portal</h2>
-      <p>A read-only oversight view, visible only to management-flagged users via the <strong>Management Dashboard</strong> link. It's independent of whether you're also a coordinator or approver — nothing about your own trips changes.</p>
+      <p>A read-only view of all travel for Management users, opened from the <strong>Management Dashboard</strong> link in your sidebar. It doesn't affect your own trips or approvals.</p>
 
-      <h3>05.1 &nbsp;Dashboard</h3>
-      <p>Pick a period (month, custom range, or year) to see stat cards — total trips, active now, pending approvals, average approval turnaround — plus breakdowns by status, approval outcome, department, trip type, and category. Click any breakdown slice to drill into the underlying trip list.</p>
+      <h3>04.1 &nbsp;Dashboard</h3>
+      <p>Choose a period (<strong>Month</strong>, <strong>Range</strong>, or <strong>Year</strong>) to see:</p>
+      <ul class="plain">
+        <li><strong>Stat cards</strong> &mdash; Total Trips, Active Now, Pending Approvals, Avg. Approval Turnaround, and Rejection Rate.</li>
+        <li><strong>Breakdowns</strong> by status, approval outcome, department, trip type, and category. Click a slice to see the trips behind it.</li>
+        <li><strong>Trips per Month</strong> &mdash; a trailing 12-month chart that doesn't change with the period.</li>
+      </ul>
 
-      <h3>05.2 &nbsp;Resource Availability</h3>
-      <p>Switch to the Resource Availability tab for a forward-looking calendar of who's traveling and when — one row per employee, one bar per trip, so overlapping travel is visible at a glance. Click a bar to drill into that specific trip.</p>
+      <h3>04.2 &nbsp;Resource Availability</h3>
+      <p>Open the <strong>Resource Availability</strong> tab to see who's traveling and when. Choose a date range (and optionally a department). Each row is an employee and each bar is a trip, so overlaps are easy to spot. Click a bar for the trip's details.</p>
     </section>
 
     <section class="doc-section" id="status">
-      <div class="section-num">06</div>
+      <div class="section-num">05</div>
       <h2>Status Reference</h2>
-      <p>Trip Status and Approval Status are two separate fields that change independently — a trip can be <code>Upcoming</code> and <code>Rejected</code> at the same time (submitted, then rejected, not yet re-edited). The chips below are the exact same ones you'll see in the portals.</p>
+      <p>Every trip has two statuses: a <strong>Trip Status</strong> (where the trip is in its life) and an <strong>Approval Status</strong> (where it is in the approval process). They appear as the same chips you see in the portals. For example, <span class="badge Upcoming">Upcoming</span> with <span class="status-text Approved">Approved</span> means the trip is ready to go; <span class="badge Drafting">Drafting</span> with <span class="status-text Rejected">Rejected</span> means it needs changes.</p>
 
-      <h3>06.1 &nbsp;Trip Status</h3>
+      <h3>05.1 &nbsp;Trip Status</h3>
       <div class="table-wrap">
         <table class="narrow">
           <tbody>
-            <tr><td><span class="badge Drafting">Drafting</span></td><td>Editable, not yet submitted for approval.</td></tr>
-            <tr><td><span class="badge Upcoming">Upcoming</span></td><td>Submitted and not yet started, regardless of decision.</td></tr>
-            <tr><td><span class="badge Ongoing">Ongoing</span></td><td>Trip currently in progress.</td></tr>
-            <tr><td><span class="badge Completed">Completed</span></td><td>Finished — stays open until the last traveller's return date, including any override.</td></tr>
-            <tr><td><span class="badge Cancelled">Cancelled</span></td><td>Trip cancelled.</td></tr>
-            <tr><td><span class="badge Archived">Archived</span></td><td>Aged out of the active list, automatically, 30 days after Completed. The record itself is unchanged — it just drops off the default view.</td></tr>
+            <tr><td><span class="badge Drafting">Drafting</span></td><td>Being prepared or edited: not submitted yet, or sent back after a rejection, withdrawal, or change request.</td></tr>
+            <tr><td><span class="badge Upcoming">Upcoming</span></td><td>Submitted or approved, and not started yet.</td></tr>
+            <tr><td><span class="badge Ongoing">Ongoing</span></td><td>Trip in progress.</td></tr>
+            <tr><td><span class="badge Completed">Completed</span></td><td>Trip finished. If a traveller returns later than the rest, it stays Ongoing until they're back.</td></tr>
+            <tr><td><span class="badge Cancelled">Cancelled</span></td><td>Trip cancelled. The record is kept.</td></tr>
+            <tr><td><span class="badge Archived">Archived</span></td><td>A Completed trip, moved out of the default list 30 days later. Nothing is deleted.</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h3>06.2 &nbsp;Approval Status</h3>
+      <h3>05.2 &nbsp;Approval Status</h3>
       <div class="table-wrap">
         <table class="narrow">
           <tbody>
-            <tr><td><span class="status-text Unsubmitted">Unsubmitted</span></td><td>Not yet submitted for approval.</td></tr>
-            <tr><td><span class="status-text Reviewing">Reviewing</span></td><td>Awaiting a decision — initial submission or a resubmission.</td></tr>
+            <tr><td><span class="status-text Unsubmitted">Unsubmitted</span></td><td>Not submitted yet.</td></tr>
+            <tr><td><span class="status-text Reviewing">Reviewing</span></td><td>Waiting for the approver's decision (first submission or resubmission).</td></tr>
             <tr><td><span class="status-text Approved">Approved</span></td><td>Approved.</td></tr>
-            <tr><td><span class="status-text Rejected">Rejected</span></td><td>Rejected — coordinator can revise and resubmit.</td></tr>
-            <tr><td><span class="status-text Withdrawn">Withdrawn</span></td><td>Submission withdrawn by the coordinator.</td></tr>
-            <tr><td><span class="status-text Reopened">Reopened</span></td><td>An approved trip needs changes before it can proceed.</td></tr>
+            <tr><td><span class="status-text Rejected">Rejected</span></td><td>Rejected. Revise the trip and resubmit.</td></tr>
+            <tr><td><span class="status-text Withdrawn">Withdrawn</span></td><td>You withdrew the submission. Edit and resubmit when ready.</td></tr>
+            <tr><td><span class="status-text Reopened">Reopened</span></td><td>You requested a change to an approved trip. Edit it and resubmit for approval.</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section class="doc-section" id="faq">
-      <div class="section-num">07</div>
+      <div class="section-num">06</div>
       <h2>FAQ</h2>
 
       <h3>Why don't I see the Approvals link?</h3>
-      <p>It only appears if you're listed as someone's designated approver. If you believe you should be one, check with whoever maintains the employee list.</p>
+      <p>It appears only for designated approvers. If you should be one, ask whoever maintains the employee list.</p>
 
       <h3>What's the difference between Discard and Cancel?</h3>
-      <p><strong>Discard</strong> permanently deletes the trip and its records — only available before it's ever been submitted, no reason needed beyond a confirmation. <strong>Cancel</strong> keeps the full record for audit and requires a reason — it's available any time before the trip reaches a terminal status.</p>
+      <p><strong>Discard</strong> permanently deletes a trip that was never submitted. <strong>Cancel</strong> keeps the record and needs a reason; use it once a trip has been submitted.</p>
 
-      <h3>Why can't I edit some fields on my trip?</h3>
-      <p>Trip Name can be edited from the header bar. The rest of Objective &amp; Context (Business Category, Reference/Subject, Additional Notes) doesn't have an edit control in the portal yet — if you need one of those changed, flag it directly for now.</p>
+      <h3>Why can't I edit a field?</h3>
+      <p>Most fields lock while a trip is waiting for approval or approved. Use <strong>Withdraw Submission</strong> or <strong>Request Change</strong> to unlock them. Also, only the Trip Name is editable in Objective &amp; Context for now; activities, category, reference/subject, and notes are view-only.</p>
 
-      <h3>Why did my old trip disappear from the list?</h3>
-      <p>Completed trips move to <code>Archived</code> automatically 30 days after completion and drop off the default view. Nothing is deleted — the record is unchanged.</p>
+      <h3>Why did an old trip disappear from my list?</h3>
+      <p>Completed trips are Archived automatically after 30 days and leave the default list. Nothing is deleted.</p>
 
-      <h3>How do I upload a document?</h3>
-      <p>Open the trip's Drive folder link from the review panel and upload it there directly — the portal doesn't have its own uploader. At least one document is required before you can submit for approval.</p>
-
-      <h3>I'm a management-flagged coordinator — do I lose my own trip list?</h3>
-      <p>No. Being management-flagged only adds the Management Dashboard link; your own "My Trips" view is completely unaffected.</p>
+      <h3>I'm a Management user and a coordinator. Do I lose my trips?</h3>
+      <p>No. Being a Management user only adds the Management Dashboard link. Your own trips are unaffected.</p>
     </section>
 
     <div class="footer">
-      <span>Colors, type, and spacing match the live portals' design system.</span>
-      <span>Last updated 15 Sep 2026</span>
+      <span>Last updated 21 Sep 2026</span>
     </div>
 
   </main>

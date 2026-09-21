@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Register Changelog</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"></noscript>
+<style>
+  /* ============================================
+     Design tokens — copied from DesignTokens.html
+     (appscript/html/DesignTokens.html), the file the
+     Coordinator/Approval/Management portals themselves
+     include. Same palette, same role names, so this page
+     reads as the same product, not a separate one.
+     ============================================ */
+  :root {
+    --palette-gray-50: #f9fafb;
+    --palette-gray-100: #f3f4f6;
+    --palette-gray-200: #e5e7eb;
+    --palette-gray-300: #d1d5dc;
+    --palette-gray-400: #99a1af;
+    --palette-gray-500: #6a7282;
+    --palette-gray-600: #4a5565;
+    --palette-gray-700: #364153;
+    --palette-gray-800: #1e2939;
+    --palette-gray-900: #101828;
+    --palette-gray-950: #030712;
+
+    --palette-mountain-meadow-100: #d7f4e4;
+    --palette-mountain-meadow-300: #81d4b1;
+    --palette-mountain-meadow-700: #16664d;
+    --palette-mountain-meadow-900: #114335;
+
+    --palette-candlelight-100: #fff9c2;
+    --palette-candlelight-300: #ffde3f;
+    --palette-candlelight-700: #a36005;
+    --palette-candlelight-900: #723e11;
+
+    --palette-carmine-100: #ffe0e2;
+    --palette-carmine-300: #ff9fa6;
+    --palette-carmine-700: #c3121f;
+    --palette-carmine-900: #85171f;
+
+    --palette-dodger-blue-100: #d7f2ff;
+    --palette-dodger-blue-300: #88dcff;
+    --palette-dodger-blue-700: #0a7aeb;
+    --palette-dodger-blue-900: #135395;
+
+    --palette-honey-flower-100: #f7e7ff;
+    --palette-honey-flower-300: #e6b0ff;
+    --palette-honey-flower-700: #a518d8;
+    --palette-honey-flower-900: #70168d;
+
+    /* Puerto Rico - Accent's 3rd hue. Greyscale-aliased in the live portals
+       today (DESIGN_SYSTEM.md "Current implementation status"), pulled in
+       here as this page's accent - same 100/300/700/900 shade convention
+       already used for --status-blue-*/--status-purple-* below. */
+    --palette-puerto-rico-100: #cff8f0;
+    --palette-puerto-rico-300: #67e1d1;
+    --palette-puerto-rico-700: #166f6a;
+    --palette-puerto-rico-900: #174a48;
+
+    --surface-page: var(--palette-gray-100);
+    --surface-card: #ffffff;
+    --surface-subtle: var(--palette-gray-100);
+    --border-default: var(--palette-gray-200);
+    --border-strong: var(--palette-gray-300);
+    --text-primary: var(--palette-gray-900);
+    --text-secondary: var(--palette-gray-500);
+
+    --action-primary-bg: var(--palette-gray-900);
+    --action-primary-bg-hover: var(--palette-gray-800);
+    --action-primary-text: #ffffff;
+    --action-primary-bg-subtle: var(--palette-gray-100);
+
+    --button-secondary-bg: var(--palette-gray-100);
+    --button-secondary-text: var(--palette-gray-900);
+
+    --status-success-bg: var(--palette-mountain-meadow-100);
+    --status-success-text: var(--palette-mountain-meadow-700);
+    --status-warning-bg: var(--palette-candlelight-100);
+    --status-warning-text: var(--palette-candlelight-700);
+    --status-danger-bg: var(--palette-carmine-100);
+    --status-danger-text: var(--palette-carmine-700);
+    --status-neutral-bg: var(--palette-gray-300);
+    --status-neutral-text: var(--palette-gray-800);
+    --status-blue-bg: var(--palette-dodger-blue-100);
+    --status-blue-text: var(--palette-dodger-blue-700);
+    --status-purple-bg: var(--palette-honey-flower-100);
+    --status-purple-text: var(--palette-honey-flower-700);
+    --accent-bg: var(--palette-puerto-rico-100);
+    --accent-text: var(--palette-puerto-rico-700);
+
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --text-3xl: 30px;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    /* extended rungs, same 4px-multiple derivation as DESIGN_SYSTEM.md's
+       full scale, for page-level layout this doc needs that the app's own
+       CSS hasn't had occasion to define yet */
+    --space-8: 32px;
+    --space-12: 48px;
+
+    --shadow-sm: 0 1px 5px rgba(0, 0, 0, .06);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, .15);
+
+    --bg: var(--surface-page);
+    --card: var(--surface-card);
+    --text: var(--text-primary);
+    --muted: var(--text-secondary);
+    --border: var(--border-default);
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-page: var(--palette-gray-950);
+      --surface-card: var(--palette-gray-900);
+      --surface-subtle: var(--palette-gray-800);
+      --border-default: var(--palette-gray-700);
+      --border-strong: var(--palette-gray-600);
+      --text-primary: var(--palette-gray-50);
+      --text-secondary: var(--palette-gray-400);
+
+      --action-primary-bg: var(--palette-gray-300);
+      --action-primary-bg-hover: var(--palette-gray-200);
+      --action-primary-text: var(--palette-gray-900);
+      --action-primary-bg-subtle: var(--palette-gray-800);
+
+      --button-secondary-bg: var(--palette-gray-800);
+      --button-secondary-text: var(--palette-gray-50);
+
+      --status-success-bg: var(--palette-mountain-meadow-900);
+      --status-success-text: var(--palette-mountain-meadow-300);
+      --status-warning-bg: var(--palette-candlelight-900);
+      --status-warning-text: var(--palette-candlelight-300);
+      --status-danger-bg: var(--palette-carmine-900);
+      --status-danger-text: var(--palette-carmine-300);
+      --status-neutral-bg: var(--palette-gray-700);
+      --status-neutral-text: var(--palette-gray-200);
+      --status-blue-bg: var(--palette-dodger-blue-900);
+      --status-blue-text: var(--palette-dodger-blue-300);
+      --status-purple-bg: var(--palette-honey-flower-900);
+      --status-purple-text: var(--palette-honey-flower-300);
+      --accent-bg: var(--palette-puerto-rico-900);
+      --accent-text: var(--palette-puerto-rico-300);
+
+      --shadow-sm: 0 1px 5px rgba(0, 0, 0, .35);
+      --shadow-md: 0 6px 20px rgba(0, 0, 0, .45);
+
+      color-scheme: dark;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Satoshi', Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [hidden] { display: none !important; }
+
+  /* ---------- Header ---------- */
+  .header-band {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-12) var(--space-6) 0;
+  }
+  .header-inner { max-width: 840px; margin: 0 auto; padding-bottom: var(--space-8); }
+
+  .site-nav { display: flex; gap: var(--space-4); margin-bottom: var(--space-6); font-size: var(--text-sm); font-weight: 600; }
+  .site-nav a { color: var(--muted); text-decoration: none; padding-bottom: var(--space-1); border-bottom: 2px solid transparent; }
+  .site-nav a:hover { color: var(--text); }
+  .site-nav a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent-text); }
+  .site-nav a:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
+  .eyebrow {
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+  h1 {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: var(--space-2) 0 var(--space-2);
+    text-wrap: balance;
+  }
+  .lede { max-width: 62ch; color: var(--muted); font-size: var(--text-lg); margin: 0 0 var(--space-3); }
+  .meta-line { font-size: var(--text-sm); color: var(--muted); margin: 0; }
+
+  .page { max-width: calc(840px + 2 * var(--space-6)); margin: 0 auto; padding: 0 var(--space-6) 100px; }
+
+  /* ---------- Filter ---------- */
+  .filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--bg);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .filter-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-right: var(--space-1);
+  }
+  .pill-btn {
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .pill-btn:hover { color: var(--text); border-color: var(--muted); }
+  .pill-btn:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+  .pill-btn[aria-pressed="true"][data-filter="all"]      { background: var(--accent-bg);         color: var(--accent-text);         border-color: var(--accent-text); }
+  .pill-btn[aria-pressed="true"][data-filter="added"]    { background: var(--status-success-bg); color: var(--status-success-text); border-color: var(--status-success-text); }
+  .pill-btn[aria-pressed="true"][data-filter="improved"] { background: var(--status-blue-bg);    color: var(--status-blue-text);    border-color: var(--status-blue-text); }
+  .pill-btn[aria-pressed="true"][data-filter="fixed"]    { background: var(--status-warning-bg); color: var(--status-warning-text); border-color: var(--status-warning-text); }
+  .pill-btn[aria-pressed="true"][data-filter="removed"]  { background: var(--status-danger-bg);  color: var(--status-danger-text);  border-color: var(--status-danger-text); }
+
+  /* ---------- Releases ---------- */
+  .log { margin-top: var(--space-8); display: flex; flex-direction: column; gap: var(--space-12); }
+  .release { border-left: 2px solid var(--border-strong); padding-left: var(--space-6); }
+  .release-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--muted);
+    margin-bottom: var(--space-1);
+  }
+  .release-meta .when { color: var(--accent-text); font-weight: 700; }
+  .release-meta span + span::before { content: "·"; margin-right: var(--space-3); opacity: 0.6; }
+  .release h2 {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-4);
+    text-wrap: balance;
+  }
+
+  .changes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .changes li { display: flex; align-items: flex-start; gap: var(--space-3); max-width: 68ch; }
+  .tag {
+    flex: 0 0 auto;
+    min-width: 80px;
+    justify-content: center;
+    display: inline-flex;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .tag-added    { background: var(--status-success-bg); color: var(--status-success-text); }
+  .tag-improved { background: var(--status-blue-bg);    color: var(--status-blue-text); }
+  .tag-fixed    { background: var(--status-warning-bg); color: var(--status-warning-text); }
+  .tag-removed  { background: var(--status-danger-bg);  color: var(--status-danger-text); }
+
+  .footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);
+    font-size: var(--text-xs); color: var(--muted);
+  }
+  .footer a { color: var(--accent-text); }
+
+  @media (max-width: 520px) {
+    .release { padding-left: var(--space-4); }
+    .changes li { flex-direction: column; gap: var(--space-1); }
+    .tag { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-band">
+  <div class="header-inner">
+    <nav class="site-nav" aria-label="Site">
+      <a href="./">User Manual</a>
+      <a href="changelog.html" aria-current="page">Changelog</a>
+    </nav>
+    <div class="eyebrow">What's changed</div>
+    <h1>Changelog</h1>
+    <p class="lede">What's been added, improved, fixed, and removed in the INVM HSE Travel Register, newest first. Use the filter to see one kind of change.</p>
+    <p class="meta-line">176 versions since July 2026</p>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="filter-bar">
+    <div class="filter-row" role="group" aria-label="Filter by type of change">
+      <span class="filter-label">Show</span>
+      <button class="pill-btn" data-filter="all" aria-pressed="true">All</button>
+      <button class="pill-btn" data-filter="added" aria-pressed="false">Added</button>
+      <button class="pill-btn" data-filter="improved" aria-pressed="false">Improved</button>
+      <button class="pill-btn" data-filter="fixed" aria-pressed="false">Fixed</button>
+      <button class="pill-btn" data-filter="removed" aria-pressed="false">Removed</button>
+    </div>
+  </div>
+
+  <div class="log">
+
+    <section class="release">
+      <div class="release-meta"><span class="when">15 Sep 2026</span><span>v176</span></div>
+      <h2>Approvals link for approvers only</h2>
+      <ul class="changes">
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>The Approvals link now appears only for designated approvers, so everyone else no longer sees a portal with nothing for them.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">8 Sep 2026</span><span>v166&ndash;v175</span></div>
+      <h2>Cleaner sidebar, loading, and lifecycle rules</h2>
+      <ul class="changes">
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Cancel Trip moved into the trip header bar, next to Discard Trip.</span></li>
+        <li data-tag="fixed"><span class="tag tag-fixed">Fixed</span><span>Withdraw, Request Change, and Cancel can no longer be used on trips that are already Cancelled, Completed, or Archived.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>The Approval Portal sidebar now matches the Coordinator Portal: search, a status filter, and your name always visible.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>A &ldquo;+ Add New Trip&rdquo; button when no trip is selected.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Loading screens now show the shape of the page instead of a plain &ldquo;Loading&hellip;&rdquo; message.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">7&ndash;8 Sep 2026</span><span>v158&ndash;v165</span></div>
+      <h2>Clearer statuses and consistent styling</h2>
+      <ul class="changes">
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>The &ldquo;Drafting&rdquo; approval status is now called &ldquo;Unsubmitted&rdquo;.</span></li>
+        <li data-tag="removed"><span class="tag tag-removed">Removed</span><span>The second status chip. Trip Status is now one chip, with Approval Status as colored text beside it.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>An Archived status for trips 30 days after they're completed.</span></li>
+        <li data-tag="fixed"><span class="tag tag-fixed">Fixed</span><span>Dropdown colors in dark mode, and card shadows.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Type and spacing are now consistent across every screen.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">4&ndash;7 Sep 2026</span><span>v122&ndash;v157</span></div>
+      <h2>Approval and Management portals</h2>
+      <ul class="changes">
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>The Management Portal: dashboard stat cards and breakdowns by status, department, and trip type, with drill-down to the trips behind them.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>A Resource Availability calendar showing who's traveling and when.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Pending / Approved / Rejected filtering and full revision history in the Approval Portal.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Dark and light mode on all three portals, and links between them.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Edit or remove route stops directly in the itinerary.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Saving route changes is much faster, and edits now show a loading indicator.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Stronger permission checks behind every edit action.</span></li>
+        <li data-tag="fixed"><span class="tag tag-fixed">Fixed</span><span>Chart labels that were unreadable in dark mode, and a department breakdown that read the wrong column.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">21 Aug &ndash; 3 Sep 2026</span><span>v73&ndash;v121</span></div>
+      <h2>Coordinator dashboard rebuild</h2>
+      <ul class="changes">
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>A visual itinerary timeline of stops, transport legs, and stays, with in-place editing.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Transport details per leg: operator, booking reference, flight or train number, and departure and arrival points and times.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>A Travelers &amp; Roles card to add, remove, and relabel travelers without a popup.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Discard Trip, to permanently remove a trip created by mistake before it's submitted.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>A sticky header bar and sidebar, so trip details and your identity stay visible while you scroll.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>The Approval Portal now shows the same trip layout coordinators see, read-only.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Trip Status and Approval Status are now separate, with clearer names.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Add a route stop at any position, and edit dates or route from the header bar.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Dozens of layout and spacing refinements based on day-to-day use.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">Aug 2026</span></div>
+      <h2>Route and stay details</h2>
+      <ul class="changes">
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Separate outbound and return transport for international trips, for example flying out and returning by bus.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Multiple stays per trip, with real check-in and check-out dates, a stay-type list, and a local contact number.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>Stay details are optional, with a reminder when you submit.</span></li>
+        <li data-tag="fixed"><span class="tag tag-fixed">Fixed</span><span>A route-editing issue that could lose existing route data.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">Jul &ndash; Aug 2026</span></div>
+      <h2>Portal-based trip creation</h2>
+      <ul class="changes">
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Create a trip directly in the Coordinator Portal, not only through the Google Form.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Light and dark mode, and one consistent design across the portal.</span></li>
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Automatic emails to the coordinator, and to Management, when a trip is approved or rejected.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>A simpler Trip Activities picker that fills in Business Category for you.</span></li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-meta"><span class="when">Jul 2026</span></div>
+      <h2>Foundation</h2>
+      <ul class="changes">
+        <li data-tag="added"><span class="tag tag-added">Added</span><span>Safeguards so two people editing the same trip can't overwrite each other's changes.</span></li>
+        <li data-tag="improved"><span class="tag tag-improved">Improved</span><span>The system was reorganized into clearer layers for reliability and easier maintenance.</span></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    <span>Last updated 21 Sep 2026</span>
+    <a href="./">Back to the User Manual</a>
+  </div>
+
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.pill-btn');
+  const items = document.querySelectorAll('.changes li');
+  const releases = document.querySelectorAll('.release');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach(li => { li.hidden = filter !== 'all' && li.dataset.tag !== filter; });
+      releases.forEach(r => { r.hidden = !r.querySelector('li:not([hidden])'); });
+    });
+  });
+</script>
+</body>
+</html>
